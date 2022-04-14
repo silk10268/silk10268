@@ -1,0 +1,81 @@
+DB
+
+    note
+
+        建立 DBModels
+            開發環境設定 User Secret
+                建立 secrets.json
+                
+                
+        Sit 加密連線字串
+        
+    ref
+        ASP.NET Core 3.0 如何使用 Database First
+            http://ikevin.tw/2019/08/04/asp-net-core-3-0-%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8-database-first/
+        反向工程
+            https://docs.microsoft.com/zh-tw/ef/core/managing-schemas/scaffolding?tabs=dotnet-core-cli
+        [ASP.NET Core] 使用User Secret安全存放開發應用程式密鑰(VS 2017)
+            https://dotblogs.com.tw/tom5707/2018/05/07/004419
+        在 ASP.NET Core 中開發應用程式秘密保管庫儲存體
+            https://docs.microsoft.com/zh-tw/aspnet/core/security/app-secrets?view=aspnetcore-6.0&tabs=windows#secret-manager
+        EF Core 小坑：DbContextPool 會引起資料庫連線池連線耗盡
+            https://www.ipshop.xyz/12594.html
+
+建立環境
+    Visual Studio Build
+        Vue 要先 build，build 完放到 D:\TFS_WORK_Area2\Yuanta_OA\SIT\YtSms\YtSms.Core\ClientApp\dist
+        VS Build <YtSms.Core> 的時候，會直接複製 YtSms.Core\ClientApp\dist
+
+    [Dev] 本機開發環境       
+        Vue
+            安裝 node js
+                到 user 建立 .npmrc
+
+                輸入以下
+                strict-ssl=false
+                registry=http://registry.npmjs.org/
+            開啟 powershell 執行權限
+                Set-ExecutionPolicy RemoteSigned
+            安裝 vue cli
+                npm install -g @vue/cli
+            建立開發憑證
+                要用 admin powershell 執行
+                安裝 chocolatey
+                    Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
+                安裝 mkcert
+                    choco install mkcert
+                建立憑證
+                    mkcert localhost 127.0.0.1
+            VS Code
+                如果在 vs code 編輯檔案，TFS 不會自動 check out
+                    vs code 可以安裝 "Check out tfs file"
+                        https://marketplace.visualstudio.com/items?itemName=mde.checkout-tfs
+                Extension
+                    Jest Runner
+                        可以幫忙跑 jest unit test
+                        讓案例旁邊多個執行的按鈕
+                    Jest
+                        可以幫忙跑 jest unit test
+                        會出現選單，可以看所有的案例有哪些
+
+        Visual Studio
+            下載 test runner
+                Test Generator NUnit extension
+                    https://marketplace.visualstudio.com/items?itemName=NUnitDevelopers.TestGeneratorNUnitextension-18371
+
+部署
+    cd 進 YtSms.Core/ClientApp
+        執行
+            npm run build:prod
+    
+    IIS 停止 ApplicationPool 中的
+        YtSms.Core
+        YtSms.SmsApiServer    
+
+    對 YtSms.Core 右鍵點選 Publish
+    對 YtSms.SmsApiServer 右鍵點選 Publish
+
+    IIS 啟用 ApplicationPool 中的
+        YtSms.Core
+        YtSms.SmsApiServer
+
